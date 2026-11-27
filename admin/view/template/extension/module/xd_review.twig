@@ -76,6 +76,21 @@
                                     </select></div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-show-thumbnail">{{ entry_show_thumbnail }}</label>
+                                <div class="col-sm-10"><select name="module_xd_review_show_thumbnail" id="input-show-thumbnail" class="form-control">
+                                        <option value="1"{% if module_xd_review_show_thumbnail %} selected="selected"{% endif %}>{{ text_yes }}</option>
+                                        <option value="0"{% if not module_xd_review_show_thumbnail %} selected="selected"{% endif %}>{{ text_no }}</option>
+                                    </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-thumbnail-width">{{ entry_thumbnail_width }}</label>
+                                <div class="col-sm-10"><input type="number" min="1" max="500" name="module_xd_review_thumbnail_width" value="{{ module_xd_review_thumbnail_width }}" id="input-thumbnail-width" class="form-control"/></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-thumbnail-height">{{ entry_thumbnail_height }}</label>
+                                <div class="col-sm-10"><input type="number" min="1" max="500" name="module_xd_review_thumbnail_height" value="{{ module_xd_review_thumbnail_height }}" id="input-thumbnail-height" class="form-control"/></div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">{{ entry_panel_title }}</label>
                                 <div class="col-sm-10">
                                     <ul class="nav nav-tabs" id="panel-title-language">

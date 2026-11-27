@@ -1,8 +1,8 @@
 .xd-review-full-width {
     position: relative;
     left: 50%;
-    width: 100vw;
-    margin-left: -50vw;
+    width: var(--window-width, 100%);
+    transform: translateX(-50%);
 }
 
 .xd-review-card {

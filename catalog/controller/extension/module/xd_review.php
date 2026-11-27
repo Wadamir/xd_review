@@ -77,12 +77,18 @@ class ControllerExtensionModuleXdReview extends Controller {
 		$carousel = (bool)$this->config->get('module_xd_review_carousel');
 		$limit = (int)$this->config->get('module_xd_review_limit');
 		$limit = ($limit >= 1 && $limit <= 100) ? $limit : 5;
+		$show_thumbnail = (bool)$this->config->get('module_xd_review_show_thumbnail');
+		$thumbnail_width = (int)$this->config->get('module_xd_review_thumbnail_width');
+		$thumbnail_height = (int)$this->config->get('module_xd_review_thumbnail_height');
+		$thumbnail_width = ($thumbnail_width >= 1 && $thumbnail_width <= 500) ? $thumbnail_width : 80;
+		$thumbnail_height = ($thumbnail_height >= 1 && $thumbnail_height <= 500) ? $thumbnail_height : 80;
+
 		$this->load->model('tool/image');
 		$this->load->model('catalog/product');
 
 		$store_logo = $this->config->get('config_logo');
 		$store_logo = $store_logo && is_file(DIR_IMAGE . $store_logo)
-			? $this->model_tool_image->resize($store_logo, 80, 80)
+			? $this->model_tool_image->resize($store_logo, $thumbnail_width, $thumbnail_height)
 			: '';
 
 		if ($product_id) {
@@ -106,9 +112,9 @@ class ControllerExtensionModuleXdReview extends Controller {
 			$product_info = $this->model_catalog_product->getProduct((int)$result['product_id']);
 			$product_images = array();
 
-			if ($product_info) {
+			if ($product_info && $show_thumbnail) {
 				if (!empty($product_info['image']) && is_file(DIR_IMAGE . $product_info['image'])) {
-					$product_images[] = $this->model_tool_image->resize($product_info['image'], 80, 80);
+					$product_images[] = $this->model_tool_image->resize($product_info['image'], $thumbnail_width, $thumbnail_height);
 				}
 
 				$additional_images = $this->model_catalog_product->getProductImages((int)$result['product_id']);
@@ -117,7 +123,7 @@ class ControllerExtensionModuleXdReview extends Controller {
 						break;
 					}
 					if (!empty($image['image']) && is_file(DIR_IMAGE . $image['image'])) {
-						$product_images[] = $this->model_tool_image->resize($image['image'], 80, 80);
+						$product_images[] = $this->model_tool_image->resize($image['image'], $thumbnail_width, $thumbnail_height);
 					}
 				}
 			}
@@ -149,6 +155,7 @@ class ControllerExtensionModuleXdReview extends Controller {
 			'reviews' => $reviews,
 			'pagination' => $pagination->render(),
 			'carousel' => $carousel,
+			'show_thumbnail' => $show_thumbnail,
 			'text_no_reviews' => $this->language->get('text_no_reviews')
 		);
 	}

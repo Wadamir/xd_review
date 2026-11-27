@@ -106,13 +106,16 @@ class ControllerExtensionModuleXdReview extends Controller {
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_carousel'] = $this->language->get('entry_carousel');
 		$data['entry_full_width'] = $this->language->get('entry_full_width');
+		$data['entry_show_thumbnail'] = $this->language->get('entry_show_thumbnail');
+		$data['entry_thumbnail_width'] = $this->language->get('entry_thumbnail_width');
+		$data['entry_thumbnail_height'] = $this->language->get('entry_thumbnail_height');
 		$data['help_min_length'] = $this->language->get('help_min_length');
 		$data['help_widget_layout'] = $this->language->get('help_widget_layout');
 
 		$this->load->model('localisation/language');
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		$fields = array('status', 'moderation', 'guest', 'min_length', 'panel_title', 'limit', 'carousel', 'full_width');
+		$fields = array('status', 'moderation', 'guest', 'min_length', 'panel_title', 'limit', 'carousel', 'full_width', 'show_thumbnail', 'thumbnail_width', 'thumbnail_height');
 		foreach ($fields as $field) {
 			$key = 'module_xd_review_' . $field;
 			if (isset($this->request->post[$key])) {
@@ -125,6 +128,9 @@ class ControllerExtensionModuleXdReview extends Controller {
 					'limit' => 5,
 					'carousel' => 0,
 					'full_width' => 0,
+					'show_thumbnail' => 1,
+					'thumbnail_width' => 80,
+					'thumbnail_height' => 80,
 					'status' => 1,
 					'moderation' => 1,
 					'guest' => 0
@@ -346,6 +352,16 @@ class ControllerExtensionModuleXdReview extends Controller {
 		$limit = isset($this->request->post['module_xd_review_limit']) ? (int)$this->request->post['module_xd_review_limit'] : 0;
 		if ($limit < 1 || $limit > 100) {
 			$this->error['warning'] = $this->language->get('error_limit');
+		}
+
+		$thumbnail_width = isset($this->request->post['module_xd_review_thumbnail_width']) ? (int)$this->request->post['module_xd_review_thumbnail_width'] : 0;
+		if ($thumbnail_width < 1 || $thumbnail_width > 500) {
+			$this->error['warning'] = $this->language->get('error_thumbnail_width');
+		}
+
+		$thumbnail_height = isset($this->request->post['module_xd_review_thumbnail_height']) ? (int)$this->request->post['module_xd_review_thumbnail_height'] : 0;
+		if ($thumbnail_height < 1 || $thumbnail_height > 500) {
+			$this->error['warning'] = $this->language->get('error_thumbnail_height');
 		}
 
 		return !$this->error;

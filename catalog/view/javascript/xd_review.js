@@ -57,3 +57,13 @@
         });
     });
 })(jQuery);
+
+function updateWindowWidth() {
+    const widthWithoutScrollbar = document.documentElement.clientWidth;
+
+    document.documentElement.style.setProperty('--window-width', `${widthWithoutScrollbar}px`);
+}
+
+window.addEventListener('resize', updateWindowWidth);
+document.addEventListener('DOMContentLoaded', updateWindowWidth);
+updateWindowWidth();
