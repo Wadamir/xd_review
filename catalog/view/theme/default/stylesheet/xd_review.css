@@ -1,3 +1,10 @@
+.xd-review-full-width {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+}
+
 .xd-review-card {
     height: 300px;
     display: flex;

@@ -22,6 +22,7 @@ $_['entry_min_length'] = 'Минимальная длина отзыва';
 $_['entry_panel_title'] = 'Заголовок блока';
 $_['entry_limit'] = 'Количество отзывов на странице';
 $_['entry_carousel'] = 'Выводить каруселью';
+$_['entry_full_width'] = 'Блок на всю ширину';
 $_['entry_author']     = 'Автор';
 $_['entry_filter_product'] = 'Товар';
 $_['entry_filter_rating'] = 'Оценка';

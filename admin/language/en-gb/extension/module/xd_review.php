@@ -22,6 +22,7 @@ $_['entry_min_length'] = 'Minimum review length';
 $_['entry_panel_title'] = 'Panel title';
 $_['entry_limit'] = 'Reviews per page';
 $_['entry_carousel'] = 'Display as carousel';
+$_['entry_full_width'] = 'Full-width block';
 $_['entry_author']     = 'Author';
 $_['entry_filter_product'] = 'Product';
 $_['entry_filter_rating'] = 'Rating';

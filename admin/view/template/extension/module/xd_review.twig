@@ -38,19 +38,8 @@
                                     </select></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-panel-title">{{ entry_panel_title }}</label>
-                                <div class="col-sm-10"><input type="text" name="module_xd_review_panel_title" value="{{ module_xd_review_panel_title }}" id="input-panel-title" class="form-control"/></div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-limit">{{ entry_limit }}</label>
                                 <div class="col-sm-10"><input type="number" min="1" max="100" name="module_xd_review_limit" value="{{ module_xd_review_limit }}" id="input-limit" class="form-control"/></div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-carousel">{{ entry_carousel }}</label>
-                                <div class="col-sm-10"><select name="module_xd_review_carousel" id="input-carousel" class="form-control">
-                                        <option value="1"{% if module_xd_review_carousel %} selected="selected"{% endif %}>{{ text_yes }}</option>
-                                        <option value="0"{% if not module_xd_review_carousel %} selected="selected"{% endif %}>{{ text_no }}</option>
-                                    </select></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-moderation">{{ entry_moderation }}</label>
@@ -70,6 +59,37 @@
                                 <label class="col-sm-2 control-label" for="input-min-length">{{ entry_min_length }}</label>
                                 <div class="col-sm-10"><input type="number" min="1" max="1000" name="module_xd_review_min_length" value="{{ module_xd_review_min_length }}" id="input-min-length" class="form-control"/>
                                     <p class="help-block">{{ help_min_length }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-carousel">{{ entry_carousel }}</label>
+                                <div class="col-sm-10"><select name="module_xd_review_carousel" id="input-carousel" class="form-control">
+                                        <option value="1"{% if module_xd_review_carousel %} selected="selected"{% endif %}>{{ text_yes }}</option>
+                                        <option value="0"{% if not module_xd_review_carousel %} selected="selected"{% endif %}>{{ text_no }}</option>
+                                    </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-full-width">{{ entry_full_width }}</label>
+                                <div class="col-sm-10"><select name="module_xd_review_full_width" id="input-full-width" class="form-control">
+                                        <option value="1"{% if module_xd_review_full_width %} selected="selected"{% endif %}>{{ text_yes }}</option>
+                                        <option value="0"{% if not module_xd_review_full_width %} selected="selected"{% endif %}>{{ text_no }}</option>
+                                    </select></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{ entry_panel_title }}</label>
+                                <div class="col-sm-10">
+                                    <ul class="nav nav-tabs" id="panel-title-language">
+                                        {% for language in languages %}
+                                            <li{% if loop.first %} class="active"{% endif %}><a href="#panel-title-language-{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="tab-content">
+                                        {% for language in languages %}
+                                            <div class="tab-pane{% if loop.first %} active{% endif %}" id="panel-title-language-{{ language.language_id }}">
+                                                <input type="text" name="module_xd_review_panel_title[{{ language.language_id }}]" value="{{ module_xd_review_panel_title[language.language_id] ? module_xd_review_panel_title[language.language_id] }}" id="input-panel-title-{{ language.language_id }}" class="form-control"/>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </form>

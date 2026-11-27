@@ -7,10 +7,14 @@ class ControllerExtensionModuleXdReview extends Controller {
 			return '';
 		}
 
+		$this->document->addStyle('catalog/view/theme/default/stylesheet/xd_review.css');
+
 		if ($this->config->get('module_xd_review_carousel')) {
 			$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
 			$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.min.js');
 		}
+
+		$this->document->addScript('catalog/view/javascript/xd_review.js');
 
 		$product_id = isset($this->request->get['product_id']) ? (int)$this->request->get['product_id'] : 0;
 
@@ -31,8 +35,13 @@ class ControllerExtensionModuleXdReview extends Controller {
 			$default_title = $this->language->get('text_all_reviews');
 		}
 
-		$panel_title = trim((string)$this->config->get('module_xd_review_panel_title'));
+		$panel_titles = $this->config->get('module_xd_review_panel_title');
+		$language_id = (int)$this->config->get('config_language_id');
+		$panel_title = is_array($panel_titles)
+			? (isset($panel_titles[$language_id]) ? trim((string)$panel_titles[$language_id]) : '')
+			: trim((string)$panel_titles);
 		$data['heading_title'] = $panel_title !== '' ? htmlspecialchars($panel_title, ENT_QUOTES, 'UTF-8') : $default_title;
+		$data['full_width'] = (bool)$this->config->get('module_xd_review_full_width');
 
 		$data['error_request'] = $this->language->get('error_request');
 		$data['review_list'] = $this->load->view('extension/module/xd_review_list', $this->getReviewListData($product_id, 1));

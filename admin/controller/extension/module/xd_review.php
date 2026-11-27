@@ -105,10 +105,14 @@ class ControllerExtensionModuleXdReview extends Controller {
 		$data['entry_panel_title'] = $this->language->get('entry_panel_title');
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_carousel'] = $this->language->get('entry_carousel');
+		$data['entry_full_width'] = $this->language->get('entry_full_width');
 		$data['help_min_length'] = $this->language->get('help_min_length');
 		$data['help_widget_layout'] = $this->language->get('help_widget_layout');
 
-		$fields = array('status', 'moderation', 'guest', 'min_length', 'panel_title', 'limit', 'carousel');
+		$this->load->model('localisation/language');
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		$fields = array('status', 'moderation', 'guest', 'min_length', 'panel_title', 'limit', 'carousel', 'full_width');
 		foreach ($fields as $field) {
 			$key = 'module_xd_review_' . $field;
 			if (isset($this->request->post[$key])) {
@@ -117,14 +121,24 @@ class ControllerExtensionModuleXdReview extends Controller {
 				$value = $this->config->get($key);
 				$defaults = array(
 					'min_length' => 10,
-					'panel_title' => '',
+					'panel_title' => array(),
 					'limit' => 5,
 					'carousel' => 0,
+					'full_width' => 0,
 					'status' => 1,
 					'moderation' => 1,
 					'guest' => 0
 				);
 				$data[$key] = ($value === null) ? $defaults[$field] : $value;
+			}
+		}
+
+		if (!is_array($data['module_xd_review_panel_title'])) {
+			$legacy_panel_title = (string)$data['module_xd_review_panel_title'];
+			$data['module_xd_review_panel_title'] = array();
+
+			foreach ($data['languages'] as $language) {
+				$data['module_xd_review_panel_title'][$language['language_id']] = $legacy_panel_title;
 			}
 		}
 
