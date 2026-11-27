@@ -8,13 +8,6 @@ class ControllerExtensionModuleXdReview extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('setting/module');
 
-		if (!$this->model_setting_module->getModulesByCode('xd_review')) {
-			$this->model_setting_module->addModule('xd_review', array(
-				'name' => $this->language->get('heading_title'),
-				'status' => 1
-			));
-		}
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['tab']) && $this->request->post['tab'] == 'reviews') {
 			if ($this->validateReviews()) {
 				if (empty($this->request->post['selected']) || !is_array($this->request->post['selected'])) {
